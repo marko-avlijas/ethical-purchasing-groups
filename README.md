@@ -28,15 +28,10 @@ It is recommended that you install ruby using a ruby version manager, one of:
 ```
 git clone git@github.com:marko-avlijas/ethical-purchasing-groups.git
 cd ethical-purchasing-groups
-bundle
-
-# setup .env files
-cp .env.development.example .env.development
-# manually fill missing fields if any
-
-# Create & setup database
-rails db:setup
+bin/setup
 ```
+
+Please check copied .env files and fill in missing entries if any.
 
 ### Run the App
 
