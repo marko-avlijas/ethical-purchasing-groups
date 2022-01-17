@@ -41,7 +41,7 @@ rails db:setup
 ### Run the App
 
 App should be available at [http://localhost:3000](http://localhost:3000)
-    rails server
+You can start it using: `rails server` or `bin/dev`. Former will start the server only, latter will also watch for changes and compile css & javascript.
 
 * How to run the test suite
 * Services (job queues, cache servers, search engines, etc.)

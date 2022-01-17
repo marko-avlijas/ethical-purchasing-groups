@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  root "static_pages#terms_of_service"
+  get "terms_of_service", to: "static_pages#terms_of_service"
+  get "privacy_policy", to: "static_pages#privacy_policy"
 end
