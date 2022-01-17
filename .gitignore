@@ -34,3 +34,10 @@
 !/app/assets/builds/.keep
 
 /node_modules
+
+# Ignore .env files except those ending in example
+**/.env*
+!**/.env*.example
+
+# Ignore user stories etc
+/plan/*
