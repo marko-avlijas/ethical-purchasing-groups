@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2022_01_18_122226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "countries", force: :cascade do |t|
+    t.string "local_name", null: false
+    t.string "english_name", null: false
+    t.string "available_locales", null: false, array: true
+    t.string "alpha_2_code", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["alpha_2_code"], name: "index_countries_on_alpha_2_code", unique: true
+    t.index ["available_locales"], name: "index_countries_on_available_locales", unique: true
+    t.index ["english_name"], name: "index_countries_on_english_name", unique: true
+    t.index ["local_name"], name: "index_countries_on_local_name", unique: true
+  end
 
 end
