@@ -41,3 +41,6 @@
 
 # Ignore user stories etc
 /plan/*
+
+# Ignore rspec's persisted state between runs
+spec/examples.txt
