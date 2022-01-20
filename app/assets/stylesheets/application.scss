@@ -9,3 +9,15 @@ footer {
   margin-top: auto;
   padding: math.div($spacer, 3);
 }
+
+form {
+  margin-top: $spacer * 1.5;
+
+  h6 {
+    margin-bottom: $spacer * 1.5;
+  }
+}
+
+form > div {
+  margin-bottom: $spacer * 1.5;
+}

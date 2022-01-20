@@ -1,0 +1,29 @@
+<h1>Groups</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>City</th>
+      <th>Links</th>
+    </tr>
+  <% @groups.each do |group| %>
+    <tr>
+      <td><%= group.id %></td>
+      <td><%= group.title %></td>
+      <td><%= group.city.name %></td>
+      <td>
+        <%= link_to "Edit", edit_admin_group_path(group) %>
+        &nbsp;
+        <%= link_to "Show", [:admin, group] %>
+        &nbsp;
+        <%= link_to "Destroy", [:admin, group],
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete group #{group.title}" },
+                    class: "text-danger" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to "New group", new_admin_group_path, class: 'btn btn-primary' %>

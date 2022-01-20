@@ -1,0 +1,26 @@
+<div id="<%= dom_id @group %>">
+  <p>
+    <strong>Title:</strong>
+    <%= @group.title %>
+  </p>
+
+  <p>
+    <strong>Short description:</strong>
+    <%= @group.short_description %>
+  </p>
+
+  <p>
+    <strong>City:</strong>
+    <%= @group.city.name %>
+  </p>
+
+</div>
+
+<div>
+  <%= link_to "Edit this group", edit_admin_group_path(@group) %> |
+  <%= link_to "Back to groups", admin_groups_path %>
+
+  <%= button_to "Destroy this group", [:admin, @group],
+                method: :delete,
+                class: 'btn btn-danger' %>
+</div>

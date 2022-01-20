@@ -1,0 +1,26 @@
+<%= form_with(model: [:admin, group]) do |form| %>
+  <% if group.errors.any? %>
+    <h6 class="text-danger">
+      <%= pluralize(group.errors.count, "error") %> prohibited this group from being saved!
+    </h6>
+  <% end %>
+
+  <div>
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= form.label :short_description, class: 'form-label' %>
+    <%= form.text_area :short_description, class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= form.label :city_id, class: 'form-label' %>
+    <%= form.collection_select :city_id, City.all, :id, :name, {}, class: 'form-select' %>
+  </div>
+
+  <div>
+    <%= form.submit class: 'btn-primary' %>
+  </div>
+<% end %>

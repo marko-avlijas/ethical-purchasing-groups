@@ -1,0 +1,29 @@
+zagreb:
+  id: 1
+  name: Zagreb
+  country: croatia
+
+split:
+  id: 2
+  name: Split
+  country: croatia
+
+rome:
+  id: 3
+  name: Roma
+  country: italy
+
+milan:
+  id: 4
+  name: Milan
+  country: italy
+
+new_york_city:
+  id: 5
+  name: New York City
+  country: usa
+
+los_angeles:
+  id: 6
+  name: Los Angeles
+  country: usa
