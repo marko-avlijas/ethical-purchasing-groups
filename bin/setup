@@ -17,20 +17,6 @@ FileUtils.chdir APP_ROOT do
   system! "gem install bundler --conservative"
   system("bundle check") || system!("bundle install")
 
-  puts "\n== Copying env files =="
-  env_files_copied_count = 0
-  ENV_FILES = [".env.development"]
-  ENV_FILES.each do |file_path|
-    if File.exist?(file_path)
-      puts "#{file_path} already exists. Skipping!"
-    else
-      example_path = "#{file_path}.example"
-      puts "#{example_path} -> #{file_path}"
-      FileUtils.cp example_path, file_path 
-      env_files_copied_count += 1
-    end
-  end
-
   puts "\n== Preparing database =="
   system! "bin/rails db:prepare"
 
@@ -39,6 +25,4 @@ FileUtils.chdir APP_ROOT do
 
   puts "\n== Restarting application server =="
   system! "bin/rails restart"
-
-  puts "\n\nPlease check copied env files and fill in missing entries if any!\n\n" if env_files_copied_count > 0
 end

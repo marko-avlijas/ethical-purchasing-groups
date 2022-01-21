@@ -21,7 +21,18 @@ It is recommended that you install ruby using a ruby version manager, one of:
 
 1. Install Ruby specified in `.ruby-version` file
 2. Install postgresql database
-3. Create postgresql user `ethical-purchasing-groups` with password `developer`
+3. Create postgresql user matching your system (Linux, MacOS) user name and grant it superuser privileges.
+
+```
+whoami # this will return your system user name
+sudo su postgres
+createuser -s myusername # replace myusername with output from step 1
+```
+
+Linux / MacOS superuser privileges are never required.  
+Postgres superuser privileges are only required if you want to run tests.
+
+Tests use fixtures. When rails loads fixtures it drops constraints (foreign key etc) before loading fixtures. [Postgres requires superuser privileges for that](https://www.postgresql.org/docs/current/sql-altertable.html).
 
 ### App installation
 
@@ -30,8 +41,6 @@ git clone git@github.com:marko-avlijas/ethical-purchasing-groups.git
 cd ethical-purchasing-groups
 bin/setup
 ```
-
-Please check copied .env files and fill in missing entries if any.
 
 ### Run the App
 
