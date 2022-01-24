@@ -32,7 +32,7 @@ RSpec.describe "Devises", type: :system do
 
         # expect user is created and email is sent
         expect do
-          expect { click_on 'Sign up' }.to change { User.count }.by(1)
+          expect { click_on 'Sign up'; sleep 1 }.to change { User.count }.by(1)
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         # assert user is created with correct attributes
@@ -49,7 +49,7 @@ RSpec.describe "Devises", type: :system do
 
         # expect user is created and email is sent
         expect do
-          expect { click_on 'Sign up' }.to change { User.count }.by(1)
+          expect { click_on 'Sign up'; sleep 1 }.to change { User.count }.by(1)
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         # assert user is created with correct attributes
