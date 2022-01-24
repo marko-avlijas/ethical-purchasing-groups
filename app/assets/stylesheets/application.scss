@@ -12,12 +12,7 @@ footer {
 
 form {
   margin-top: $spacer * 1.5;
-
-  h6 {
+  .field, h6 {
     margin-bottom: $spacer * 1.5;
   }
-}
-
-form > div {
-  margin-bottom: $spacer * 1.5;
 }

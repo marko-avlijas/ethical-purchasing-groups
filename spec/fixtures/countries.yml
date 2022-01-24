@@ -17,7 +17,6 @@
 #
 
 croatia:
-  id: 1
   local_name: Hrvatska
   english_name: Croatia
   available_locales:
@@ -25,7 +24,6 @@ croatia:
   alpha_2_code: hr
 
 italy:
-  id: 2
   local_name: Italia
   english_name: Italy
   available_locales:
@@ -33,7 +31,6 @@ italy:
   alpha_2_code: it
 
 usa:
-  id: 3
   local_name: United States of America
   english_name: United States of America
   available_locales:
