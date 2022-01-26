@@ -27,6 +27,7 @@
 #  neighborhood           :string
 #  about_text             :text
 #  about_url              :string
+#  locale                 :string           not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -46,9 +47,23 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :trackable
 
+  before_validation :set_locale
+
   validates :name, :phone, presence: true
 
   attr_accessor :terms_of_service
-
   validates :terms_of_service, acceptance: true, on: :create
+  
+
+  protected
+
+    def send_devise_notification(notification, *args)
+      I18n.with_locale(locale) { super(notification, *args) }
+    end
+
+  private
+
+    def set_locale
+      self.locale = I18n.locale || I18n.default_locale
+    end
 end

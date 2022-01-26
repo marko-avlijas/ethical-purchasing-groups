@@ -27,6 +27,7 @@
 #  neighborhood           :string
 #  about_text             :text
 #  about_url              :string
+#  locale                 :string           not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #

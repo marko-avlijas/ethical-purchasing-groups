@@ -33,5 +33,9 @@ module EthicalPurchasingGroups
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.i18n.default_locale = :hr
+    I18n.available_locales = [:en, :hr, :it]
+    config.time_zone = 'Zagreb'
   end
 end

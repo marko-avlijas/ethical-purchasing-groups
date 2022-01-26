@@ -40,6 +40,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.string :neighborhood
       t.text :about_text
       t.string :about_url
+      t.string :locale, null: false
 
       t.timestamps null: false
     end

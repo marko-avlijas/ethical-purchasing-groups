@@ -13,6 +13,7 @@ RSpec.describe "Devises", type: :system do
         email: 'someone@example.com',
         password: '12345678',
         neighborhood: 'Manhattan',
+        locale: 'en'
       }
     end
 
@@ -27,7 +28,7 @@ RSpec.describe "Devises", type: :system do
       end
 
       it "fills required fields only, creates user and sends email" do
-        visit '/users/sign_up'
+        visit '/en/users/sign_up'
         fill_required_fields
 
         # expect user is created and email is sent
@@ -43,7 +44,7 @@ RSpec.describe "Devises", type: :system do
       end
 
       it "fills all fields, creates user and sends email" do
-        visit '/users/sign_up'
+        visit '/en/users/sign_up'
         fill_required_fields
         fill_in 'Neighborhood', with: user_data[:neighborhood]
 
@@ -62,7 +63,7 @@ RSpec.describe "Devises", type: :system do
 
     context "when registration is unsuccessful" do
       it "missing required field" do
-        visit '/users/sign_up'
+        visit '/en/users/sign_up'
 
         # didn't fill in phone
         fill_in 'Name', with: user_data[:name] 
@@ -78,7 +79,7 @@ RSpec.describe "Devises", type: :system do
       end
 
       it "didn't accept terms of service" do
-        visit '/users/sign_up'
+        visit '/en/users/sign_up'
 
         fill_in 'Name', with: user_data[:name] 
         fill_in 'Email', with: user_data[:email] 

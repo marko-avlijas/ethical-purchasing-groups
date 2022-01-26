@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_135009) do
     t.string "neighborhood"
     t.text "about_text"
     t.string "about_url"
+    t.string "locale", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
