@@ -22,12 +22,14 @@
 #  locked_at              :datetime
 #  superadmin             :boolean          default("false"), not null
 #  group_id               :integer
+#  requested_group_id     :integer
 #  name                   :string           not null
 #  phone                  :string           not null
 #  neighborhood           :string
+#  is_producer            :boolean          default("false"), not null
 #  about_text             :text
 #  about_url              :string
-#  locale                 :string           not null
+#  locale                 :string           default("hr"), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -36,6 +38,7 @@
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_group_id              (group_id)
+#  index_users_on_requested_group_id    (requested_group_id)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #

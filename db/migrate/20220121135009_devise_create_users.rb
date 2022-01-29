@@ -35,12 +35,14 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       # Profile
       t.boolean :superadmin, null: false, default: false
       t.references :group
+      t.references :requested_group, foreign_key: { to_table: :groups }
       t.string :name, null: false
       t.string :phone, null: false
       t.string :neighborhood
+      t.boolean :is_producer, null: false, default: false
       t.text :about_text
       t.string :about_url
-      t.string :locale, null: false
+      t.string :locale, null: false, default: "hr"
 
       t.timestamps null: false
     end

@@ -65,21 +65,25 @@ ActiveRecord::Schema.define(version: 2022_01_21_135009) do
     t.datetime "locked_at", precision: 6
     t.boolean "superadmin", default: false, null: false
     t.bigint "group_id"
+    t.bigint "requested_group_id"
     t.string "name", null: false
     t.string "phone", null: false
     t.string "neighborhood"
+    t.boolean "is_producer", default: false, null: false
     t.text "about_text"
     t.string "about_url"
-    t.string "locale", null: false
+    t.string "locale", default: "hr", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
+    t.index ["requested_group_id"], name: "index_users_on_requested_group_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   add_foreign_key "cities", "countries"
   add_foreign_key "groups", "cities"
+  add_foreign_key "users", "groups", column: "requested_group_id"
 end
