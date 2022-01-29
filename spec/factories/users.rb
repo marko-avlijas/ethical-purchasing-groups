@@ -51,9 +51,14 @@ FactoryBot.define do
     password { '12345678' }
     password_confirmation { '12345678' }
     confirmed_at { Time.current }
+    group_id { 1 }
 
     trait :unconfirmed do
       confirmed_at { nil }
+    end
+
+    trait :superadmin do
+      superadmin { true }
     end
   end
 end

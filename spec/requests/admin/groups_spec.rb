@@ -12,7 +12,7 @@
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/groups", type: :request do
+RSpec.describe "/admin/groups", type: :request do
   
   # Group. As you add validations to Group, be sure to
   # adjust the attributes here as well.
@@ -24,6 +24,10 @@ RSpec.describe "/groups", type: :request do
     # short_description is too long
     attributes_for(:group).merge(short_description: "A"*1000)
   }
+
+  let(:superadmin) { create(:user, :superadmin) }
+
+  before { login_as(superadmin) }
 
   describe "GET /index" do
     it "renders a successful response" do

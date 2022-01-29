@@ -1,0 +1,3 @@
+hr:
+  admin:
+    superadmin_required: Pristup dozvoljen samo superadminima
