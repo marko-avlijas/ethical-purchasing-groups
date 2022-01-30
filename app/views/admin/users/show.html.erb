@@ -1,0 +1,49 @@
+<div class="card">
+  <h1 class="card-header"><%= @user.name %></h1>
+
+  <div class="card-body">
+    <h3 class="card-title mt-3">Status</h3>
+    <ul class="list-group list-group-flush">
+      <%= admin_show_field "Producer", @user.is_producer %>
+      <%= admin_show_field "Admin", @user.superadmin %>
+    </ul>
+
+    <h3 class="card-title mt-3">About</h3>
+    <ul class="list-group list-group-flush">
+      <%= admin_show_field "Email", @user.email %>
+      <%= admin_show_field "Phone", link_to(@user.phone, "tel:#{@user.phone}") %>
+      <%= admin_show_field "Neighborhood", @user.neighborhood %>
+      <%= admin_show_field "Group", @user.group&.title.presence || "No group" %>
+      <%= admin_show_field "Requested Group", @user.requested_group&.title.presence || "No group" %>
+      <%= admin_show_field("Locale", @user.locale) %>
+      <%= admin_show_field("About URL", @user.about_url) %>
+      <%= admin_show_field("About Text", @user.about_text) if @user.about_text.blank? %>
+    </ul>
+    <% if @user.about_text.present? %>
+      <h3 class="card-title mt-3">About Text</h3>
+      <div class="p-3">
+        <%= simple_format(@user.about_text) %>
+      </div>
+    <% end %>
+
+    <h3 class="card-title mt-3">Activity</h3>
+    <ul class="list-group list-group-flush">
+      <%= admin_show_field "Created At", @user.created_at %>
+      <%= admin_show_field "Updated At", @user.updated_at %>
+      <%= admin_show_field "Confirmed At", @user.confirmed_at %>
+      <%= admin_show_field "Confirmation Sent At", @user.confirmation_sent_at %>
+      <%= admin_show_field "Sign in Count", @user.sign_in_count %>
+      <%= admin_show_field "Failed Sign in Attempts", @user.failed_attempts %>
+      <%= admin_show_field "Current Sign In At", @user.current_sign_in_at %>
+      <%= admin_show_field "Current Sign In IP", @user.current_sign_in_ip %>
+      <%= admin_show_field "Last Sign In At", @user.last_sign_in_at %>
+      <%= admin_show_field "Last Sign In IP", @user.last_sign_in_ip %>
+      <%= admin_show_field "Locked At", @user.locked_at %>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <%= link_to "Back to users", admin_users_path %>
+</div>
+

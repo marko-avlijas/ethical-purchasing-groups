@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
     namespace :admin do
       resources :groups
+      resources :users, only: [:index, :show]
     end
 
     get "terms_of_service", to: "static_pages#terms_of_service"

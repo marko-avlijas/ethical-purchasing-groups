@@ -58,7 +58,7 @@ class User < ApplicationRecord
   validates :terms_of_service, acceptance: true, on: :create
   
   belongs_to :group, optional: true
-  belongs_to :requested_group, optional: true
+  belongs_to :requested_group, optional: true, class_name: "Group"
 
   protected
 
