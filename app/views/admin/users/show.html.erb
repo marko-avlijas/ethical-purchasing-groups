@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mb-4">
   <h1 class="card-header"><%= @user.name %></h1>
 
   <div class="card-body">
@@ -28,6 +28,7 @@
 
     <h3 class="card-title mt-3">About</h3>
     <table class="table table-striped">
+      <%= admin_show_field "ID", @user.id %>
       <%= admin_show_field "Email", @user.email %>
       <%= admin_show_field "Phone", link_to(@user.phone, "tel:#{@user.phone}") %>
       <%= admin_show_field "Neighborhood", @user.neighborhood %>
@@ -61,7 +62,7 @@
   </div>
 </div>
 
-<div>
-  <%= link_to "Back to users", admin_users_path %>
+<div class="mb-4">
+  <%= link_to "Back to users", admin_users_path, class: "btn btn-info" %>
 </div>
 

@@ -60,6 +60,54 @@ class User < ApplicationRecord
   belongs_to :group, optional: true
   belongs_to :requested_group, optional: true, class_name: "Group"
 
+  scope :by_name, ->(name) { where("name ILIKE ?", "%#{name}%") if name.present? }
+  scope :by_email, ->(email) { where("email ILIKE ?", "%#{email}%") if email.present? }
+
+  # Admin filters
+  scope :af_locked, ->(value) do
+    return if value.blank?
+
+    case value
+    when "true"
+      where("locked_at IS NOT NULL")
+    when "false"
+      where(locked_at: nil)
+    end
+  end
+
+  scope :af_email_confirmed, ->(value) do
+    return if value.blank?
+
+    case value
+    when "true"
+      where("confirmed_at IS NOT NULL")
+    when "false"
+      where(confirmed_at: nil)
+    end
+  end
+
+  scope :af_is_producer, ->(value) do
+    return if value.blank?
+
+    case value
+    when "true"
+      where(is_producer: true)
+    when "false"
+      where(is_producer: false)
+    end
+  end
+
+  scope :af_admin, ->(value) do
+    return if value.blank?
+
+    case value
+    when "true"
+      where(superadmin: true)
+    when "false"
+      where(superadmin: false)
+    end
+  end
+
   protected
 
     def send_devise_notification(notification, *args)

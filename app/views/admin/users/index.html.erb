@@ -1,25 +1,88 @@
-<h1>Users</h1>
+<h1 class="mb-3">Users</h1>
 
-<table class="table">
+<div class="card mb-5">
+  <div class="card-body">
+    <h4 class="card-title">Filters</h4>
+    <%= form_with(url: admin_users_path, method: :get) do |form| %>
+      <div class="row mb-3">
+        <%= form.label :name, class: 'col-sm-2 col-md-2 col-lg-1 col-form-label' %>
+        <div class="col-sm-10 col-md-4 col-lg-5">
+          <%= form.text_field :name, value: params[:name], class: 'form-control', autocomplete: "off" %>
+        </div>
+        <%= form.label :email, class: 'col-sm-2 col-md-2 col-lg-1 col-form-label' %>
+        <div class="col-sm-10 col-md-4 col-lg-5">
+          <%= form.text_field :email, value: params[:email], class: 'form-control', autocomplete: "off" %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-xs-6 col-sm-4 col-md-3">
+          <%= form.label :confirmed, "Email Confirmed", class: 'form-label' %>
+          <%= form.select :confirmed,
+                          options_for_select([["Yes", true], ["No", false]], params[:confirmed]),
+                          { include_blank: "All" },
+                          class: 'form-select' %>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3">
+          <%= form.label :locked, "Locked", class: 'form-label' %>
+          <%= form.select :locked,
+                          options_for_select([["Yes", true], ["No", false]], params[:locked]),
+                          { include_blank: "All" },
+                          class: 'form-select' %>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3">
+          <%= form.label :is_producer, "Producer?", class: 'form-label' %>
+          <%= form.select :is_producer,
+                          options_for_select([["Yes", true], ["No", false]], params[:is_producer]),
+                          { include_blank: "All" },
+                          class: 'form-select' %>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3">
+          <%= form.label :admin, "Admin?", class: 'form-label' %>
+          <%= form.select :admin,
+                          options_for_select([["Yes", true], ["No", false]], params[:admin]),
+                          { include_blank: "All" },
+                          class: 'form-select' %>
+        </div>
+      </div>
+
+      <%= link_to "Reset", admin_users_path, class: "btn btn-light me-3" %>
+      <%= form.submit "Filter", class: "btn btn-info" %>
+    <% end %>
+  </div>
+</div>
+
+<h4><%= @users.count %> users found</h4>
+<table class="table align-middle">
   <thead>
     <tr>
-      <th>ID</th>
+      <th>Link</th>
       <th>Name</th>
       <th>Email</th>
       <th>Group</th>
       <th>Last Seen</th>
-      <th>Links
     </tr>
-  <% @users.each do |user| %>
-    <tr>
-      <td><%= user.id %></td>
-      <td><%= user.name %></td>
-      <td><%= user.email %></td>
-      <td><%= user.group&.title.presence || "No Group" %></td>
-      <td><%= time_ago_in_words(user.current_sign_in_at) %></td>
-      <td>
-        <%= link_to "Show", [:admin, user] %>
-      </td>
-    </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to "Details", [:admin, user], class: "btn btn-info" %></td>
+        <td>
+          <%= user.name %>
+          <br />
+          <%= tag.span("Admin", class: "badge bg-success") if user.superadmin %>
+          <%= tag.span("Producer", class: "badge bg-info") if user.is_producer %>
+          <%= tag.span("Locked", class: "badge bg-danger") if user.locked_at.present? %>
+          <%= tag.span("Not confirmed", class: "badge bg-warning") if user.confirmed_at.blank? %>
+        </td>
+        <td><%= user.email %></td>
+        <td><%= user.group&.title.presence || "No Group" %></td>
+        <td><%= time_ago_in_words(user.current_sign_in_at) %></td>
+        <td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
