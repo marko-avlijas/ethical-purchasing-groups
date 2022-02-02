@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_135009) do
+ActiveRecord::Schema.define(version: 2022_02_01_120727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,103 @@ ActiveRecord::Schema.define(version: 2022_01_21_135009) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["city_id"], name: "index_groups_on_city_id"
     t.index ["title", "city_id"], name: "index_groups_on_title_and_city_id", unique: true
+  end
+
+  create_table "legacy_deliveries", force: :cascade do |t|
+    t.bigint "legacy_offer_id", null: false
+    t.bigint "legacy_location_id"
+    t.datetime "when", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["legacy_location_id"], name: "index_legacy_deliveries_on_legacy_location_id"
+    t.index ["legacy_offer_id"], name: "index_legacy_deliveries_on_legacy_offer_id"
+  end
+
+  create_table "legacy_group_offerings", force: :cascade do |t|
+    t.bigint "legacy_offer_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_legacy_group_offerings_on_group_id"
+    t.index ["legacy_offer_id"], name: "index_legacy_group_offerings_on_legacy_offer_id"
+  end
+
+  create_table "legacy_locations", force: :cascade do |t|
+    t.string "title", null: false
+    t.float "lat"
+    t.float "lng"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["title"], name: "index_legacy_offers_on_title", unique: true
+  end
+
+  create_table "legacy_offer_items", force: :cascade do |t|
+    t.bigint "legacy_offer_id", null: false
+    t.string "title", null: false
+    t.integer "position", default: 0, null: false
+    t.text "note"
+    t.boolean "placeholder", default: false, null: false
+    t.string "status"
+    t.datetime "status_changed_at", precision: 6
+    t.decimal "total_available_qty", precision: 7, scale: 1
+    t.decimal "min_qty_per_order", precision: 7, scale: 1
+    t.string "packaging"
+    t.string "packaging_description"
+    t.string "unit_bulk"
+    t.integer "price_bulk"
+    t.string "unit_package"
+    t.integer "price_package"
+    t.string "unit_vario"
+    t.integer "price_vario"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["legacy_offer_id"], name: "index_legacy_offer_items_on_legacy_offer_id"
+  end
+
+  create_table "legacy_offers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.text "note"
+    t.datetime "valid_from", precision: 6
+    t.datetime "valid_until", precision: 6
+    t.string "company_name"
+    t.string "company_address"
+    t.string "company_oib"
+    t.string "dispatch_place"
+    t.string "dispatch_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_legacy_offers_on_user_id"
+  end
+
+  create_table "legacy_order_items", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "offer_item_id", null: false
+    t.decimal "qty", precision: 7, scale: 1, null: false
+    t.decimal "min_qty", precision: 7, scale: 1
+    t.decimal "solidary_qty", precision: 7, scale: 1
+    t.datetime "solidary_qty_changed_at", precision: 6
+    t.string "status"
+    t.datetime "status_changed_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["offer_item_id"], name: "index_legacy_order_items_on_offer_item_id"
+    t.index ["order_id"], name: "index_legacy_order_items_on_order_id"
+  end
+
+  create_table "legacy_orders", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "legacy_offer_id", null: false
+    t.bigint "legacy_delivery_id", null: false
+    t.text "note"
+    t.string "status"
+    t.datetime "status_changed_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["legacy_delivery_id"], name: "index_legacy_orders_on_legacy_delivery_id"
+    t.index ["legacy_offer_id"], name: "index_legacy_orders_on_legacy_offer_id"
+    t.index ["user_id"], name: "index_legacy_orders_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

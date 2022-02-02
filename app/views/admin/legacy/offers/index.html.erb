@@ -1,0 +1,75 @@
+<%= render "admin/shared/navigation" %>
+
+<h1 class="mb-3">Legacy Offers</h1>
+
+<div class="card mb-5">
+  <div class="card-body">
+    <h4 class="card-title">Filters</h4>
+    <%= form_with(url: admin_legacy_offers_path, method: :get) do |form| %>
+      <div class="row mb-3">
+        <%= form.label :title, class: 'col-sm-2 col-md-2 col-lg-1 col-form-label' %>
+        <div class="col-sm-10 col-md-4 col-lg-5">
+          <%= form.text_field :title, value: params[:title], class: 'form-control', autocomplete: "off" %>
+        </div>
+        <%= form.label :user_id, "Producer", class: 'col-sm-2 col-md-2 col-lg-1 col-form-label' %>
+        <div class="col-sm-10 col-md-4 col-lg-5">
+          <%= form.select :user_id,
+                  options_for_select(@users_for_select, params[:user_id]),
+                  { include_blank: "All" },
+                  class: 'form-select' %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-6 col-sm-4 col-md-3">
+          <%= form.label :has_company_info, class: 'form-label' %>
+          <%= form.select :has_company_info,
+                          options_for_select([["Yes", true], ["No", false]], params[:has_company_info]),
+                          { include_blank: "All" },
+                          class: 'form-select' %>
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-3">
+          <%= form.label :has_dispatch_info, "Has Dispatch Info", class: 'form-label' %>
+          <%= form.select :has_dispatch_info,
+                          options_for_select([["Yes", true], ["No", false]], params[:has_dispatch_info]),
+                          { include_blank: "All" },
+                          class: 'form-select' %>
+        </div>
+      </div>
+
+      <%= link_to "Reset", admin_legacy_offers_path, class: "btn btn-light me-3" %>
+      <%= form.submit "Filter", class: "btn btn-info" %>
+    <% end %>
+  </div>
+</div>
+
+<h4><%= @offers.count %> offers found</h4>
+<table class="table align-middle">
+  <thead>
+    <tr>
+      <th>Link</th>
+      <th>Producer</th>
+      <th>Title</th>
+      <th>Valid From</th>
+      <th>Valid Until</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @offers.each do |offer| %>
+      <tr>
+        <td><%= link_to "Show", admin_legacy_offer_path(offer), class: "btn btn-sm btn-info" %></td>
+        <td><%= offer.user.name %></td>
+        <td>
+          <%= offer.title %>
+          <br>
+          <%= offer.items_count %>
+          <%= link_to "items", admin_legacy_offer_items_path(offer_id: offer.id) %>
+        </td>
+        <td><%= admin_value_presenter(offer.valid_from) %></td>
+        <td><%= admin_value_presenter(offer.valid_until) %></td>
+        <td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

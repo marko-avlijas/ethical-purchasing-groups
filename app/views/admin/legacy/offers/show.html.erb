@@ -1,0 +1,58 @@
+<%= render "admin/shared/navigation" %>
+
+<div class="card mb-4">
+  <h3 class="card-header">Offer</h3>
+
+  <div class="card-body">
+    <h2 class="card-title mt-3"><%= @offer.title %></h2>
+    <table class="table">
+      <%= admin_show_field "ID", @offer.id %>
+      <%= admin_show_field "User", @offer.user.name %>
+      <%= admin_show_field "Note", @offer.note unless @offer.note.present? %>
+      <tr>
+        <th>Valid</th>
+        <td><%= @offer.valid_from %> &mdash; <%= @offer.valid_until %></td>
+      </tr>
+      <tr>
+        <th>Timestamps</th>
+        <td>
+          Created at <%= @offer.created_at %>
+          <br>
+          Updated at <%= @offer.updated_at %>
+        </td>
+      </tr>
+    </table>
+    <% if @offer.note.present? %>
+      <h5 class="card-subtitle mt-3">Note</h5>
+      <div class="p-3">
+        <%= simple_format(@offer.note) %>
+      </div>
+    <% end %>
+
+    <% if @offer.dispatch_place.present? || @offer.dispatch_date.present? %>
+      <h5 class="card-subtitle mt-3">Dispatch Info</h5>
+      <table class="table">
+        <%= admin_show_field "Dispatch Place", @offer.dispatch_place %>
+        <%= admin_show_field "Updated At", @offer.dispatch_date %>
+      </table>
+    <% else %>
+      <h5 class="card-subtitle mt-3">No dispatch info</h5>
+    <% end %>
+
+    <% if @offer.company_name.present? || @offer.company_address.present? || @offer.company_oib.present? %>
+      <h5 class="card-subtitle mt-3">Company Info</h5>
+      <table class="table">
+        <%= admin_show_field "Name", @offer.company_name %>
+        <%= admin_show_field "Address", @offer.company_address %>
+        <%= admin_show_field "OIB", @offer.company_oib %>
+      </table>
+    <% else %>
+      <h5 class="card-subtitle mt-3">No Company info</h5>
+    <% end %>
+  </div>
+</div>
+
+<div class="mb-4">
+  <%= link_to "Back to offers", admin_legacy_offers_path, class: "btn btn-info" %>
+</div>
+

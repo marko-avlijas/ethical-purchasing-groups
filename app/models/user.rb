@@ -60,8 +60,11 @@ class User < ApplicationRecord
   belongs_to :group, optional: true
   belongs_to :requested_group, optional: true, class_name: "Group"
 
+  has_many :legacy_offers
+
   scope :by_name, ->(name) { where("name ILIKE ?", "%#{name}%") if name.present? }
   scope :by_email, ->(email) { where("email ILIKE ?", "%#{email}%") if email.present? }
+  scope :producers, -> { where(is_producer: true) }
 
   # Admin filters
   scope :af_locked, ->(value) do

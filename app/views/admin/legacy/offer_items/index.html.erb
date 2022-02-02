@@ -1,0 +1,75 @@
+<%= render "admin/shared/navigation" %>
+
+<h1 class="mb-3">Legacy Offers Items</h1>
+
+<div class="card mb-5">
+  <div class="card-body">
+    <h4 class="card-title">Filters</h4>
+    <%= form_with(url: admin_legacy_offer_items_path,
+                  method: :get,
+                  html: { autocomplete: "off" }) do |form| %>
+      <div class="row mb-3">
+        <%= form.label :title, class: 'col-sm-2 col-md-2 col-lg-1 col-form-label' %>
+        <div class="col-sm-10 col-md-4 col-lg-5">
+          <%= form.text_field :title, value: params[:title], class: 'form-control', autocomplete: "off" %>
+        </div>
+        <%= form.label :user_id, "Producer", class: 'col-sm-2 col-md-2 col-lg-1 col-form-label' %>
+        <div class="col-sm-10 col-md-4 col-lg-5">
+          <%= form.select :user_id,
+                  options_for_select(@users_for_select, params[:user_id]),
+                  { include_blank: "All" },
+                  class: 'form-select',
+                  autocomplte: "off" %>
+        </div>
+      </div>
+
+      <%= link_to "Reset", admin_legacy_offer_items_path, class: "btn btn-light me-3" %>
+      <%= form.submit "Filter", class: "btn btn-info" %>
+    <% end %>
+  </div>
+</div>
+
+<h4><%= @offer_items.count %> items found</h4>
+<table class="table align-middle">
+  <thead>
+    <tr>
+      <th>Link</th>
+      <th>Title</th>
+      <th>Packaging</th>
+      <th>Unit</th>
+      <th>Price</th>
+      <th>Min Qty Per Order</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @offer_items.each do |item| %>
+      <tr>
+        <td><%= link_to "Show", admin_legacy_offer_item_path(item), class: "btn btn-sm btn-info" %></td>
+        <td>
+          <%= item.title %>
+          <br>
+          <% if params[:user_id].blank? %>
+            (<%= item.legacy_offer.user.name %>) 
+            <br>
+            <%= item.legacy_offer.title %>
+            <br>
+          <% end %>
+          <%= tag.span("Deactivated", class: "badge bg-warning") if item.status == "deactivated" %>
+        </td>
+        <td><%= admin_value_presenter(item.packaging) %></td>
+        <%
+            type = item.packaging.to_sym
+          %>
+        <td><%= admin_value_presenter(item.send("unit_#{type}")) %></td>
+        <td><%= admin_value_presenter(item.send("price_#{type}")) %></td>
+        <td>
+          <%=
+            minimum = item.min_qty_per_order
+            minimum = nil if minimum == 0.0
+            admin_value_presenter(minimum)
+          %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
