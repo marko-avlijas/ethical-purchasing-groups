@@ -13,7 +13,11 @@ class Admin::Legacy::OfferItemsController < AdminController
       .by_title(params[:title])
       .for_user(params[:user_id])
       .for_legacy_offer(params[:offer_id])
-      .order(title: :asc)
+      .order(:title, :packaging, :unit_bulk, :unit_vario, :unit_package, :min_qty_per_order)
       .to_a
+
+    if params[:user_id].present?
+      @last_offer = LegacyOffer.where(user_id: params[:user_id]).order(:created_at).last
+    end
   end
 end

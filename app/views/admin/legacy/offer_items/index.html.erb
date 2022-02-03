@@ -42,11 +42,26 @@
     </tr>
   </thead>
   <tbody>
-    <% @offer_items.each do |item| %>
+    <% 
+        duplicate_items_counter = 1
+        unique_items_counter = 0
+    %>
+    <% @offer_items.each_with_index do |item, index| %>
+      <%
+          next_item = @offer_items[index+1]
+          if item.similar?(next_item)
+            duplicate_items_counter += 1
+            next
+          end
+      %>
       <tr>
         <td><%= link_to "Show", admin_legacy_offer_item_path(item), class: "btn btn-sm btn-info" %></td>
         <td>
           <%= item.title %>
+          <% if duplicate_items_counter > 1 %>
+            <br>
+            <%= duplicate_items_counter %> items
+          <% end %>
           <br>
           <% if params[:user_id].blank? %>
             (<%= item.legacy_offer.user.name %>) 
@@ -70,6 +85,22 @@
           %>
         </td>
       </tr>
+      <% 
+          unique_items_counter += 1
+          duplicate_items_counter = 1
+          last_item = item
+        %>
     <% end %>
+    <tr>
+      <td></td>
+      <td colspan="5">
+        <%= unique_items_counter %> unique items
+        <% if params[:user_id].present? %>
+          <br>
+          Last offer
+          updated at: <%= admin_value_presenter(@last_offer.updated_at) %>
+        <% end %>
+      </td>
+    </tr>
   </tbody>
 </table>

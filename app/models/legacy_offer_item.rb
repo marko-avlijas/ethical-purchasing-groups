@@ -41,5 +41,15 @@ class LegacyOfferItem < ApplicationRecord
   scope :by_title, ->(title) { where("legacy_offer_items.title ILIKE ?", "%#{title}%") if title.present? }
   scope :for_user, ->(user) { joins(:legacy_offer).where(legacy_offer: { user: user }) if user.present? }
   scope :for_legacy_offer, ->(value) { where(legacy_offer: value) if value.present? }
+
+  def similar?(another)
+    return false unless another.is_a?(LegacyOfferItem)
+
+    title.downcase == another.title.downcase &&
+      packaging.downcase == another.packaging.downcase &&
+      unit_package&.downcase == another.unit_package&.downcase &&
+      unit_bulk&.downcase == another.unit_bulk&.downcase &&
+      unit_vario&.downcase == another.unit_vario&.downcase
+  end
 end
 
