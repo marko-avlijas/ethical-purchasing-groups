@@ -34,6 +34,8 @@
 # total_available_qty is always null
 # packaging_description is always null
 # status is "deactivated" or null
+# packaging is ["vario", "package", "bulk"]
+# min_qty_per_order is [0.0, 0.1e0, 0.2e0, 0.3e0, 0.4e0, 0.5e0, 0.6e0, 0.8e0, 0.1e1, 0.15e1, 0.2e1, 0.3e1, 0.5e1, 0.6e1, 0.3e3, 0.5e3]
 
 class LegacyOfferItem < ApplicationRecord
   belongs_to :legacy_offer
@@ -42,10 +44,18 @@ class LegacyOfferItem < ApplicationRecord
   scope :for_user, ->(user) { joins(:legacy_offer).where(legacy_offer: { user: user }) if user.present? }
   scope :for_legacy_offer, ->(value) { where(legacy_offer: value) if value.present? }
 
+  scope :similar_to, ->(another) do
+    where("TRIM(LOWER(title))=TRIM(LOWER(?)) AND LOWER(packaging) = LOWER(?)", another.title, another.packaging)
+      .where("LOWER(unit_package) = LOWER(?)", another.unit_package)
+      .where("LOWER(unit_bulk) = LOWER(?)", another.unit_bulk)
+      .where("LOWER(unit_vario) = LOWER(?)", another.unit_vario)
+      .where("id != ?", another.id)
+  end
+
   def similar?(another)
     return false unless another.is_a?(LegacyOfferItem)
 
-    title.downcase == another.title.downcase &&
+    title.downcase.strip == another.title.downcase.strip &&
       packaging.downcase == another.packaging.downcase &&
       unit_package&.downcase == another.unit_package&.downcase &&
       unit_bulk&.downcase == another.unit_bulk&.downcase &&

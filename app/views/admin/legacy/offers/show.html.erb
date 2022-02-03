@@ -7,7 +7,7 @@
     <h2 class="card-title mt-3"><%= @offer.title %></h2>
     <table class="table">
       <%= admin_show_field "ID", @offer.id %>
-      <%= admin_show_field "User", @offer.user.name %>
+      <%= admin_show_field "User", link_to(@offer.user.name, [:admin, @offer.user]) %>
       <%= admin_show_field "Note", @offer.note unless @offer.note.present? %>
       <tr>
         <th>Valid</th>

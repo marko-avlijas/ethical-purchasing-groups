@@ -26,5 +26,13 @@ module AdminHelper
     #tag.li(tag.strong(label + label_ending) + value_html, class: "list-group-item")
     tag.tr(tag.th(label + label_ending) + tag.td(value_html))
   end
+
+  def admin_equal_or_value(value, original:)
+    if value == original
+      tag.span "Equal", class: "badge bg-light text-dark"
+    else
+      admin_value_presenter(value)
+    end
+  end
 end
 

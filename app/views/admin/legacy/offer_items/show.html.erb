@@ -1,0 +1,99 @@
+<%= render "admin/shared/navigation" %>
+
+<div class="card mb-4">
+  <h3 class="card-header">Offer Item</h3>
+
+  <div class="card-body">
+    <h2 class="card-title mt-3"><%= @item.title %></h2>
+    <table class="table">
+      <%= admin_show_field "ID", @item.id %>
+      <%= admin_show_field "Producer", @item.legacy_offer.user.name %>
+      <%= admin_show_field "Offer", link_to(@offer.title, admin_legacy_offer_path(@offer.id)) %>
+      <%= admin_show_field "Status", @item.status %>
+      <%= admin_show_field "Packaging", @item.packaging %>
+      <%= admin_show_field "Unit Package", @item.unit_package %>
+      <%= admin_show_field "Price Package", @item.price_package %>
+      <%= admin_show_field "Unit Bulk", @item.unit_bulk %>
+      <%= admin_show_field "Price Bulk", @item.price_bulk %>
+      <%= admin_show_field "Unit Vario", @item.unit_vario %>
+      <%= admin_show_field "Price Vario", @item.price_vario %>
+      <%= admin_show_field "Note", @item.note unless @item.note.present? %>
+        <th>Timestamps</th>
+        <td>
+          Created at <%= @item.created_at %>
+          <br>
+          Updated at <%= @item.updated_at %>
+        </td>
+      </tr>
+    </table>
+    <% if @item.note.present? %>
+      <h5 class="card-subtitle mt-3">Note</h5>
+      <div class="p-3">
+        <%= simple_format(@item.note) %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <h3 class="card-header">Similar</h3>
+
+  <div class="card-body">
+    <h4 class="card-title mb-4"><%= @similar_items.count %> similar items from other offers</h4>
+    <% uniq_notes = @similar_items.map(&:note).uniq %>
+    <h5 class="card-subtitle mb-3">
+      <% if uniq_notes.count == 1 && uniq_notes.first == @item.note  %>
+        All items have identical notes like this one
+      <% else %>
+        <%= uniq_notes.count %> different notes:
+        <ul class="list-group list-group-flush">
+          <% uniq_notes.each do |note| %>
+            <li class="list-group-item"><%= note.inspect %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </h5>
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>Link</th>
+          <th>Title</th>
+          <th>Packaging</th>
+          <th>Unit Package</th>
+          <th>Price Package</th>
+          <th>Unit Bulk</th>
+          <th>Price Bulk</th>
+          <th>Unit Vario</th>
+          <th>Price Vario</th>
+          <th>Min Qty Per Order</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @similar_items.each do |item| %>
+          <tr>
+            <td><%= link_to "Show", admin_legacy_offer_item_path(item), class: "btn btn-sm btn-info" %></td>
+            <td>
+              <%= admin_equal_or_value(item.title, original: @item.title) %>
+              <br>
+              <%= tag.span("Deactivated", class: "badge bg-warning") if item.status == "deactivated" %>
+            </td>
+            <td><%= admin_equal_or_value(item.packaging, original: @item.packaging) %></td>
+            <td><%= admin_equal_or_value(item.unit_package, original: @item.unit_package) %></td>
+            <td><%= admin_equal_or_value(item.price_package, original: @item.price_package) %></td>
+            <td><%= admin_equal_or_value(item.unit_bulk, original: @item.unit_bulk) %></td>
+            <td><%= admin_equal_or_value(item.price_bulk, original: @item.price_bulk) %></td>
+            <td><%= admin_equal_or_value(item.unit_vario, original: @item.unit_vario) %></td>
+            <td><%= admin_equal_or_value(item.price_vario, original: @item.price_vario) %></td>
+            <td><%= admin_equal_or_value(item.min_qty_per_order, original: @item.min_qty_per_order) %></td>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="mb-4">
+  <%= link_to "Back to offer items", admin_legacy_offer_items_path, class: "btn btn-info" %>
+</div>
+

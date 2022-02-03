@@ -20,4 +20,13 @@ class Admin::Legacy::OfferItemsController < AdminController
       @last_offer = LegacyOffer.where(user_id: params[:user_id]).order(:created_at).last
     end
   end
+
+  def show
+    @item = LegacyOfferItem.find params[:id]
+    @offer = @item.legacy_offer
+    @similar_items = LegacyOfferItem
+      .similar_to(@item)
+      .order(:title, :packaging, :unit_bulk, :unit_vario, :unit_package, :min_qty_per_order)
+      .to_a
+  end
 end
