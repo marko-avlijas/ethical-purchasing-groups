@@ -82,7 +82,7 @@
         </td>
         <td><%= user.email %></td>
         <td><%= admin_value_presenter(user.group&.title) %></td>
-        <td><%= time_ago_in_words(user.current_sign_in_at) %></td>
+        <td><%= admin_value_presenter(user.current_sign_in_at) %></td>
         <td>
       </tr>
     <% end %>

@@ -2,7 +2,7 @@ module AdminHelper
   def admin_value_presenter(value)
     case value
     when ActiveSupport::TimeWithZone, DateTime
-      "#{value.to_s} (#{time_ago_in_words(value)})"
+      I18n.t("admin.date_and_time_ago", date: value.to_s, time_ago: time_ago_in_words(value))
     when TrueClass
       tag.span "Yes", class: "badge bg-success"
     when FalseClass

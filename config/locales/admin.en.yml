@@ -1,3 +1,4 @@
 en:
   admin:
     superadmin_required: Access allowed only for superadmins
+    date_and_time_ago: "%{date} (%{time_ago} ago)"
