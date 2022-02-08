@@ -45,6 +45,15 @@ class LegacyOfferItem < ApplicationRecord
   scope :for_user, ->(user) { joins(:legacy_offer).where(legacy_offer: { user: user }) if user.present? }
   scope :for_legacy_offer, ->(value) { where(legacy_offer: value) if value.present? }
 
+  scope :by_minimal_quantity_per_order, ->(minimal_quantity) do
+    return if minimal_quantity.blank?
+
+    if minimal_quantity == "zero"
+      where(min_qty_per_order: minimal_quantity)
+    else
+      where("min_qty_per_order != 0")
+    end
+  end
   scope :similar_to, ->(another) do
     where("TRIM(LOWER(title))=TRIM(LOWER(?)) AND LOWER(packaging) = LOWER(?)", another.title, another.packaging)
       .where("LOWER(unit_package) = LOWER(?)", another.unit_package)

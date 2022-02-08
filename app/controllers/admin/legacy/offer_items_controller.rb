@@ -14,6 +14,7 @@ class Admin::Legacy::OfferItemsController < AdminController
       .for_user(params[:user_id])
       .for_legacy_offer(params[:offer_id])
       .by_packaging(params[:packaging])
+      .by_minimal_quantity_per_order(params[:minimal_quantity])
       .order(:title, :packaging, :unit_bulk, :unit_vario, :unit_package, :min_qty_per_order)
       .to_a
 
