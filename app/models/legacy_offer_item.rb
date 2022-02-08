@@ -41,6 +41,7 @@ class LegacyOfferItem < ApplicationRecord
   belongs_to :legacy_offer
 
   scope :by_title, ->(title) { where("legacy_offer_items.title ILIKE ?", "%#{title}%") if title.present? }
+  scope :by_packaging, ->(packaging) { where(packaging: packaging) if packaging.present? }
   scope :for_user, ->(user) { joins(:legacy_offer).where(legacy_offer: { user: user }) if user.present? }
   scope :for_legacy_offer, ->(value) { where(legacy_offer: value) if value.present? }
 

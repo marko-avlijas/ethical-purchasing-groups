@@ -23,6 +23,17 @@
         </div>
       </div>
 
+      <div class="row mb-3">
+        <div class="col-6 col-sm-4 col-md-3">
+          <%= form.label :packaging, class: 'form-label' %>
+          <%= form.select :packaging,
+                          options_for_select([["Bulk", "bulk"], ["Vario", "vario"], ["Package", "package"]], params[:packaging]),
+                          { include_blank: "All" },
+                          class: 'form-select' %>
+        </div>
+      </div>
+
+
       <%= link_to "Reset", admin_legacy_offer_items_path, class: "btn btn-light me-3" %>
       <%= form.submit "Filter", class: "btn btn-info" %>
     <% end %>
