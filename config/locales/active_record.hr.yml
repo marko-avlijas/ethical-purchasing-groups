@@ -1,0 +1,23 @@
+hr:
+  activerecord:
+    models:
+      product:
+        one: Proizvod
+        few: Proizvoda
+        many: Proizvoda
+        other: Proizvoda
+    attributes:
+      product:
+        title: Naziv
+        note: Napomena
+        producer: Proizvođač
+      product_variant:
+        additional_note: Dodatna napomena
+        unit: Jedinica
+        price: Cijena
+        type: Tip
+        active: Aktivan
+        min_quantity_per_order: Minimalna količina za narudžbu
+        min_weight: Minimalna težina
+        max_weight: Maksimalna težina
+

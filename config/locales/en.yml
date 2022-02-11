@@ -1,0 +1,16 @@
+en:
+  products:
+    products: Products
+    new: New Product
+    editing: "Editing product"
+    confirm_delete: "Are you sure you want to delete product %{title}?"
+    active_explanation: "Included in next offer"
+    packagings: Packagings
+    notices:
+      created: Product was successfully created.
+      updated: Product was successfully updated.
+      destroyed: Product was successfully destroyed.
+    packaging:
+      package: Package
+      bulk: Bulk
+      vario: Variable weight

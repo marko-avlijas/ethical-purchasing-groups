@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_01_120727) do
+ActiveRecord::Schema.define(version: 2022_02_08_204155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,32 @@ ActiveRecord::Schema.define(version: 2022_02_01_120727) do
     t.index ["user_id"], name: "index_legacy_orders_on_user_id"
   end
 
+  create_table "product_variants", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.text "additional_note"
+    t.integer "order"
+    t.boolean "active", default: true, null: false
+    t.string "type", null: false
+    t.string "unit", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.decimal "min_quantity_per_order", precision: 7, scale: 2
+    t.decimal "min_weight"
+    t.decimal "max_weight"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_product_variants_on_product_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "note"
+    t.bigint "producer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["producer_id", "title"], name: "index_products_on_producer_id_and_title", unique: true
+    t.index ["producer_id"], name: "index_products_on_producer_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -182,5 +208,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_120727) do
 
   add_foreign_key "cities", "countries"
   add_foreign_key "groups", "cities"
+  add_foreign_key "product_variants", "products"
+  add_foreign_key "products", "users", column: "producer_id"
   add_foreign_key "users", "groups", column: "requested_group_id"
 end

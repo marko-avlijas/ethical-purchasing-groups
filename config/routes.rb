@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  root "static_pages#terms_of_service"
+  root "products#index"
 
-  scope "/(:locale)", locale: /#{I18n.available_locales.join("|")}/, defaults: { locale: "hr" } do
+  scope "/(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
     devise_for :users
+    resources :products
 
     namespace :admin do
       resources :groups

@@ -57,6 +57,10 @@ FactoryBot.define do
       confirmed_at { nil }
     end
 
+    trait :producer do
+      is_producer { true }
+    end
+
     trait :superadmin do
       superadmin { true }
     end

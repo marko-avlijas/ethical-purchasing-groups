@@ -16,3 +16,20 @@ form {
     margin-bottom: $spacer * 1.5;
   }
 }
+
+@include media-breakpoint-up(md) {
+  tr.mobile-actions {
+    display: none;
+  }
+}
+
+
+@include media-breakpoint-down(md) {
+  th.actions, td.actions {
+    display: none;
+  }
+
+  tr.mobile-actions {
+    border-top-style: hidden;
+  }
+}

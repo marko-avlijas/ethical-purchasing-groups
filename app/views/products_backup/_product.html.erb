@@ -1,0 +1,31 @@
+<tr>
+  <td class="actions">
+    <%= link_to product, method: :delete, class: 'btn btn-danger', data: { confirm: t("products.confirm_delete", title: product.title) } do %>
+      <i class="bi bi-trash"></i>
+      Delete
+    <% end %>
+    <%= link_to edit_product_path(product), class: 'ms-3 btn btn-warning' do %>
+      <i class="bi bi-pencil"></i>
+      Edit
+    <% end %>
+  </td>
+  <td>
+    <strong><%= product.title %></strong>
+    <% if product.note %>
+      <br class="mb-1">
+      <%= product.note %>
+    <% end %>
+  </td>
+</tr>
+<tr class="mobile-actions">
+  <td colspan="3">
+    <%= link_to product, method: :delete, class: 'btn btn-danger', data: { confirm: t("products.confirm_delete", title: product.title) } do %>
+      <i class="bi bi-trash"></i>
+      Delete
+    <% end %>
+    <%= link_to edit_product_path(product), class: 'ms-3 btn btn-warning' do %>
+      <i class="bi bi-pencil"></i>
+      Edit
+    <% end %>
+  </td>
+</tr>

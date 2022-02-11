@@ -1,0 +1,30 @@
+<div class="field">
+  <%= form.label :type, class: 'form-label' %>
+  <%= form.select :type,
+                  [[t("products.packaging.package"), "PackageVariant"],
+                   [t("products.packaging.bulk"), "BulkVariant"],
+                   [t("products.packaging.vario"), "VarioVariant"]],
+                   { include_blank: "Please Choose" },
+                  class: 'form-select' %>
+</div>
+
+<div class="field form-floating">
+  <%= form.text_field :unit, class: 'form-control' %>
+  <%= form.label :unit %>
+</div>
+
+<div class="field form-floating">
+  <%= form.number_field :price, class: 'form-control', step: 0.5 %>
+  <%= form.label :price %>
+</div>
+
+<div class="field form-floating">
+  <%= form.text_area :additional_note, class: 'form-control' %>
+  <%= form.label :additional_note %>
+</div>
+
+<div class="field form-floating">
+  <%= form.number_field :min_quantity_per_order, class: 'form-control', step: 0.5 %>
+  <%= form.label :min_quantity_per_order %>
+</div>
+

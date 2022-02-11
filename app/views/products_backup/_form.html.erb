@@ -1,0 +1,28 @@
+<%= form_with(model: product) do |form| %>
+  <% if product.errors.any? %>
+    <h6 class="text-danger">
+      <%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:
+    </h6>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :note, class: 'form-label' %>
+    <%= form.text_area :note, class: 'form-control' %>
+  </div>
+
+  <% unless product.new_record? %>
+    <div class="field">
+      <%= form.label :active, class: 'form-check-label' %>
+      <%= form.check_box :active, class: 'form-check-input' %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -1,0 +1,17 @@
+hr:
+  products:
+    products: Proizvodi
+    new: Novi proizvod
+    editing: "Uređivanje proizvoda"
+    confirm_delete: "Jeste li sigurni da želite obrisati proizvod %{title}?"
+    active_explanation: "Uključen u sljedeću ponudu"
+    packagings: Pakiranja
+    notices:
+      created: Proizvod je uspješno stvoren.
+      updated: Promjene na proizvodu su uspješno spremljene.
+      destroyed: Proizvod je uspješno obrisan.
+    packaging:
+      package: Paket
+      bulk: Rinfuza
+      vario: Komad varijabilne težine
+

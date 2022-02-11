@@ -1,0 +1,21 @@
+<h1><%= t("products.products") %></h1>
+
+<ul class="list-group">
+<table class="table table-hover products">
+  <thead>
+    <tr>
+      <th class="actions"></th>
+      <th>Proizvod</th>
+      <th>Cijena</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render @products %>
+  </tbody>
+</table>
+</ul>
+
+<br>
+
+<%= link_to t('products.new'), new_product_path, class: "btn btn-primary" %>
